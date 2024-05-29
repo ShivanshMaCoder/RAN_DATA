@@ -1,0 +1,7 @@
+numpy
+pandas
+scikit-learn
+XGBoost
+tqdm
+git+https://github.com/TimeSynth/TimeSynth.git
+os
