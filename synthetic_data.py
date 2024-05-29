@@ -4,10 +4,7 @@
 # !pip install git+https://github.com/TimeSynth/TimeSynth.git
 
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 import numpy as np
-import json
 import os
 from tqdm.auto import tqdm, trange
 import timesynth as ts
@@ -74,19 +71,16 @@ for i in data.columns:
 
 for i in trange(33,48):
 
-    time_sampler_pp = ts.TimeSampler(stop_time=24)
-    irregular_time_samples_pp = time_sampler_pp.sample_irregular_time(resolution=0.1, keep_percentage=70)
-    pseudo_periodic = ts.signals.PseudoPeriodic(frequency=0.925, freqSD=0.001, ampSD=0.3)
+    time_sampler_pp = ts.TimeSampler(stop_time=72)
+    irregular_time_samples_pp = time_sampler_pp.sample_irregular_time(resolution=0.1, keep_percentage=100)
+    pseudo_periodic = ts.signals.PseudoPeriodic(frequency=1.32, freqSD=0.001, ampSD=0.4)
     timeseries_pp = ts.TimeSeries(pseudo_periodic)
     samples_pp, signals_pp, errors_pp = timeseries_pp.sample(irregular_time_samples_pp)
 
-    samples_pp = abs(samples_pp) * 8
-
-    plt.plot(samples_pp)
+    samples_pp = (abs(samples_pp) * 8) + 1
 
     data['Avg_Connected_UEs'] = samples_pp
     X_unseen = df['Avg_Connected_UEs'].to_list()
-
 
     X = df['Avg_Connected_UEs']
     predicted_values = {}
