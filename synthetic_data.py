@@ -69,7 +69,7 @@ for i in data.columns:
             columns_to_iterate.append(i)
 
 
-for i in trange(33,48):
+for i in trange(48):
 
     time_sampler_pp = ts.TimeSampler(stop_time=72)
     irregular_time_samples_pp = time_sampler_pp.sample_irregular_time(resolution=0.1, keep_percentage=100)
