@@ -9,7 +9,7 @@ import os
 from tqdm.auto import tqdm, trange
 import timesynth as ts
 
-df=pd.read_csv('/content/Airwave_OG.csv')
+df=pd.read_csv('Airwave_OG.csv')
 
 df.interpolate(inplace=True)
 
@@ -115,4 +115,4 @@ for i in trange(33,48):
           predicted_values[column] = discarded[column]
 
         values = pd.DataFrame(predicted_values)
-        values.to_csv(f'/values_{i+1}.csv')
+        values.to_csv(f'Data/values_{i+1}.csv')
