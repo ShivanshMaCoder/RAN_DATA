@@ -1,11 +1,5 @@
-# !pip -q install scikit-learn
-# !pip -q install XGBoost
-# !pip install tqdm
-# !pip install git+https://github.com/TimeSynth/TimeSynth.git
-
 import pandas as pd
 import numpy as np
-import os
 from tqdm.auto import tqdm, trange
 import timesynth as ts
 
@@ -20,29 +14,6 @@ df=pd.read_csv('Airwave_OG.csv')
 df.interpolate(inplace=True)
 
 data = df.copy()
-
-discarded = data[[
-    'SIP Dropped Calls',
-    'Cat M1 Bearer Drop pct',
-    'Pct CA ScheduledUE with 0 EScell DL',
-    'Pct CA ScheduledUE with 1 EScell DL',
-    'Pct CA ScheduledUE with 2 EScell DL',
-    'Pct CA ScheduledUE with 3 EScell DL',
-    'SIP Calls with a Leg',
-    'Pct CA ScheduledUE with 4 EScell DL',
-    'Cat M1 Bearer Setup Failure pct',
-    '_80th_percentile_traffic',
-    'SIP DC%',
-    'Pct CA ScheduledUE with 1 Scell UL',
-    'Pct CA ScheduledUE with 2 Scell UL',
-    'Pct CA ScheduledUE with 3 Scell UL',
-    'HO_fail_PCT_InterFreq',
-]]
-
-value_dict = {}
-
-for column in discarded.columns:
-  value_dict[column] = discarded[column]
 
 data = data.drop([
     'SIP Dropped Calls',
@@ -84,9 +55,8 @@ for i in trange(48):
     samples_pp, signals_pp, errors_pp = timeseries_pp.sample(irregular_time_samples_pp)
 
     samples_pp = (abs(samples_pp) * 8) + 1
-
-    data['Avg_Connected_UEs'] = samples_pp
-    X_unseen = df['Avg_Connected_UEs'].to_list()
+    
+    X_unseen = samples_pp
 
     X = df['Avg_Connected_UEs']
     predicted_values = {}
@@ -117,8 +87,5 @@ for i in trange(48):
 
         predicted_values['Avg_Connected_UEs'] = samples_pp
 
-        for column in discarded.columns:
-          predicted_values[column] = discarded[column]
-
         values = pd.DataFrame(predicted_values)
-        values.to_csv(f'Data/values_{i+1}.csv')
+        values.to_csv(f'/Data/values_{i+1}.csv')
