@@ -48,9 +48,9 @@ for i in data.columns:
 
 for i in trange(48):
 
-    time_sampler_pp = ts.TimeSampler(stop_time=72)
+    time_sampler_pp = ts.TimeSampler(stop_time=201.6)
     irregular_time_samples_pp = time_sampler_pp.sample_irregular_time(resolution=0.1, keep_percentage=100)
-    pseudo_periodic = ts.signals.PseudoPeriodic(frequency=1.32, freqSD=0.001, ampSD=0.4)
+    pseudo_periodic = ts.signals.PseudoPeriodic(frequency=0.218, freqSD=0.001, ampSD=0.4)
     timeseries_pp = ts.TimeSeries(pseudo_periodic)
     samples_pp, signals_pp, errors_pp = timeseries_pp.sample(irregular_time_samples_pp)
 
